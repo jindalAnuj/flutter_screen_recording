@@ -56,12 +56,12 @@ class FlutterScreenRecordingPlugin(
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent): Boolean {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?): Boolean {
 
         if (requestCode == SCREEN_RECORD_REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 //initMediaRecorder();
-
+               if(data!=null){
                 mMediaProjectionCallback = MediaProjectionCallback()
                 mMediaProjection = mProjectionManager?.getMediaProjection(resultCode, data)
                 mMediaProjection?.registerCallback(mMediaProjectionCallback, null)
@@ -69,6 +69,7 @@ class FlutterScreenRecordingPlugin(
 
                 _result.success(true)
                 return true
+               }
             } else {
                 _result.success(false)
             }
